@@ -1,4 +1,4 @@
-# Cafepress::Ezp::Client
+# Cafepress::EZP::Client
 
 CafePress EZ Prints API Client
 
@@ -24,7 +24,7 @@ CafePress EZ Prints API Client
 
 Add this line to your application's Gemfile:
 
-    gem 'cafepress-ezp-client', :git => ''
+    gem 'cafepress-ezp-client', :git => 'git@github.com:rgenerator/cafepress-ezp-client.git'
 
 And then execute:
 
