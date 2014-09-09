@@ -5,8 +5,19 @@ CafePress EZ Prints API Client
 ## Overview
 
 	require 'cafepress/ezp/client'
-	
-	client = CafePress::EZP::Client.new
+
+    include CafePress::EZP
+
+	Client.config do
+	  secure = true
+	  partner_id = 92343212
+	  vendor.name = 'MyPlay'
+	  vendor.address1 = '400 Lafayette St. 2R'
+	  # ...
+	end
+
+	client = Client.new
+	order = client.place_order(customer, order, order_items)
 
 
 ## Installation
