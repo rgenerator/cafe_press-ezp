@@ -3,6 +3,9 @@ require 'cafepress/ezp/client/version'
 module CafePress
   module EZP
     class Client
+      Error = Class.new(StandardError)
+      RequestError = Class.new(Error)
+
       # If you send one order per ordersession, it is recommended that your ordersessionID be
       # the same as your internal orderID for clarity in reporting.
 

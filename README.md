@@ -1,4 +1,4 @@
-# Cafepress::EZP::Client
+# CafePress::EZP::Client
 
 CafePress EZ Prints API Client
 

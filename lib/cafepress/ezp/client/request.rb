@@ -18,12 +18,13 @@ module CafePress
         end
 
         def send
-          send_request(build(xml))
+          body = build(xml)
+          build_response(send_request(body))
         end
 
         protected
         [:partner_id, :customer, :order, :shipping_address].each do |attr|
-          define_method(attr) { @params[attr] ||={} }
+          define_method(attr) { @params[attr] ||= {} }
         end
 
         def order_items
@@ -43,8 +44,13 @@ module CafePress
           # TODO: SSL option
           Net::HTTP.start(endpoint.host, endpoint.port, :use_ssl => false) do
             http.request_post(endpoint.path, body) do |res|
+              # TODO: does it return non-200s when encoountering non-HTTP problem with request?
+              raise RequestError, "request failed, returned HTTP #{res.code}" if res.code != "200"
+              res.body
             end
           end
+        rescue SystemCallError, SocketError => e
+          raise RequestError, "failed to connect to #{endpoint}: #{e}"
         end
 
         def build_order_session(xml)
