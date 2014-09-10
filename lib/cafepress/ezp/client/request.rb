@@ -37,7 +37,7 @@ module CafePress
           xml.instruct!
           # TODO: may need partner_id in subclasses
           # TODO: images element
-          xml.tag!('orders', :partnerid => @params[:partner_id], :version => @@api_version) { build_request(xml) }
+          xml.orders(:partnerid => @params[:partner_id], :version => @@api_version) { build_request(xml) }
           xml.target!
         end
 
@@ -55,22 +55,20 @@ module CafePress
         end
 
         def build_order_session(xml)
-          xml.tag! 'ordersession' do
-            xml.tag! 'ordersession' do
-              xml.tag! 'sessionid', order[:id]
+          xml.ordersession do
+            xml.sessionid order[:id]
 
-              yield if block_given?
+            yield if block_given?
 
-              build_order_totals(xml)
-            end
+            build_order_totals(xml)
           end
         end
 
         def build_order(xml)
-          xml.tag! 'order' do
-            xml.tag! 'orderid', order[:id]
+          xml.order do
+            xml.orderid order[:id]
             build_shipping_address(xml)
-            xml.tag! 'shippingmethod', order[:shipping_method]
+            xml.shippingmethod order[:shipping_method]
             build_order_lines(xml)
 
             yield if block_given?
@@ -78,43 +76,43 @@ module CafePress
         end
 
         def build_order_totals(xml)
-          xml.tag! 'producttotal', order[:product_total]
-          xml.tag! 'shippingtotal', order[:shipping_total]
-          xml.tag! 'taxtotal', order[:tax_total]
-          xml.tag! 'total', order[:total]
+          xml.producttotal order[:product_total]
+          xml.shippingtotal order[:shipping_total]
+          xml.taxtotal order[:tax_total]
+          xml.total order[:total]
         end
 
         def build_order_lines(xml)
           # @imageid, affiliatekey
 
           order_items.each do |oi|
-            xml.tag! 'orderline', :productid => oi[:product_id] do
-              xml.tag! 'quantity', oi[:quantity]
-              # xml.tag! 'position', oi[:position] # crop or fix
-              xml.tag! 'productprice', oi[:price]
-              xml.tag! 'productname', oi[:name]
-              # xml.tag! 'enhance', oi[:enhance]  # enhancement algorithm should be applied to the image before printing
+            xml.orderline :productid => oi[:product_id] do
+              xml.quantity oi[:quantity]
+              # xml.position oi[:position] # crop or fix
+              xml.productprice oi[:price]
+              xml.productname oi[:name]
+              # xml.enhance oi[:enhance]  # enhancement algorithm should be applied to the image before printing
             end
           end
         end
 
         def build_customer(xml)
-          xml.tag! 'customer' do
+          xml.customer do
             # companyname, firstname, ...
             build_address(xml, customer)
           end
         end
 
         def build_shipping_address(xml)
-          xml.tag! 'shippingaddress' do
-            xml.tag! 'companyname', shipping_address[:company]
-            xml.tag! 'firstname', shipping_address[:first_name]
-            xml.tag! 'lastname', shipping_address[:last_name]
+          xml.shippingaddress do
+            xml.companyname shipping_address[:company]
+            xml.firstname shipping_address[:first_name]
+            xml.lastname shipping_address[:last_name]
 
             build_address(xml, shipping_address)
           end
         end
-        
+
         def build_address(xml, address)
           [:address1, :address2, :city, :country, :email, :phone, :state, :zip].each do |name|
             element =  name == :country ? 'countrycode' : name

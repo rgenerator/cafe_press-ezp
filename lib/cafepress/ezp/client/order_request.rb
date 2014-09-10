@@ -42,10 +42,10 @@ module CafePress
         end
 
         def build_vendor(xml)
-          xml.tag! 'vendor' do
-            xml.tag! 'name', @vendor[:name]
+          xml.vendor do
+            xml.name @vendor[:name]
             build_address(xml, @vendor)
-            xml.tag! 'url', @vendor[:url]
+            xml.url @vendor[:url]
           end
         end
       end
