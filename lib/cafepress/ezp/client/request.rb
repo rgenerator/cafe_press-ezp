@@ -38,7 +38,7 @@ module CafePress
           # TODO: may need partner_id in subclasses
           # TODO: images element
           xml.tag!('orders', :partnerid => @params[:partner_id], :version => @@api_version) { build_request(xml) }
-          xml.to_xs
+          xml.target!
         end
 
         def send_request(body)
@@ -98,20 +98,25 @@ module CafePress
           end
         end
 
-        def build_customer(xml, customer)
+        def build_customer(xml)
           xml.tag! 'customer' do
+            # companyname, firstname, ...
             build_address(xml, customer)
           end
         end
 
-        def build_shipping_address(xml, address)
+        def build_shipping_address(xml)
           xml.tag! 'shippingaddress' do
-            build_address(xml, address)
+            xml.tag! 'companyname', shipping_address[:company]
+            xml.tag! 'firstname', shipping_address[:first_name]
+            xml.tag! 'lastname', shipping_address[:last_name]
+
+            build_address(xml, shipping_address)
           end
         end
-
+        
         def build_address(xml, address)
-          [:first_name, :last_name, :address1, :address2, :city, :state, :zip, :country, :phone].each do |name|
+          [:address1, :address2, :city, :country, :email, :phone, :state, :zip].each do |name|
             element =  name == :country ? 'countrycode' : name
             xml.tag! element, customer[name]
           end

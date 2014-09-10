@@ -9,11 +9,12 @@ module CafePress
         # ?PartnerNumber=XXX&PartnerReference=yyy
 
         def initialize(params = {})
-          @vendor = params[:vendor]
+          @vendor = params[:vendor] || {}
           super
         end
 
         protected
+
         def build_response(body)
           # TODO: Malformed XML is accepted
           # doc.get_elements(xpath)
@@ -33,7 +34,7 @@ module CafePress
         end
 
         def build_request(xml)
-          build_order_session(xml, @order) do
+          build_order_session(xml) do
             build_vendor(xml)
             build_customer(xml)
             build_order(xml)
@@ -42,7 +43,9 @@ module CafePress
 
         def build_vendor(xml)
           xml.tag! 'vendor' do
+            xml.tag! 'name', @vendor[:name]
             build_address(xml, @vendor)
+            xml.tag! 'url', @vendor[:url]
           end
         end
       end

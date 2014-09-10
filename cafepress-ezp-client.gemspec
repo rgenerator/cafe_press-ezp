@@ -5,7 +5,7 @@ require 'cafepress/ezp/client/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "cafepress-ezp-client"
-  spec.version       = Cafepress::Ezp::Client::VERSION
+  spec.version       = CafePress::EZP::Client::VERSION
   spec.authors       = ["relentlessGENERATOR"]
   spec.email         = ["dev@rgenerator.com"]
   spec.summary       = %q{CafePress EZ Prints API Client}
