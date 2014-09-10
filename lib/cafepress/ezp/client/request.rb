@@ -57,18 +57,17 @@ module CafePress
         def build_order_session(xml)
           xml.ordersession do
             xml.sessionid order[:id]
+            build_order_totals(xml)
 
             yield if block_given?
-
-            build_order_totals(xml)
           end
         end
 
         def build_order(xml)
           xml.order do
             xml.orderid order[:id]
-            build_shipping_address(xml)
             xml.shippingmethod order[:shipping_method]
+            build_shipping_address(xml)
             build_order_lines(xml)
 
             yield if block_given?
@@ -88,7 +87,7 @@ module CafePress
           order_items.each do |oi|
             xml.orderline :productid => oi[:product_id] do
               xml.quantity oi[:quantity]
-              # xml.position oi[:position] # crop or fix
+              # xml.position oi[:position] # CROP or FIT
               xml.productprice oi[:price]
               xml.productname oi[:name]
               # xml.enhance oi[:enhance]  # enhancement algorithm should be applied to the image before printing

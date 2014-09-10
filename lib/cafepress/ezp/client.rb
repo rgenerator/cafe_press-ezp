@@ -9,18 +9,87 @@ module CafePress
       RequestError = Class.new(Error)
       OrderError = Class.new(Error)
 
-      # If you send one order per ordersession, it is recommended that your ordersessionID be
-      # the same as your internal orderID for clarity in reporting. Is this //ordersession/sessionid?
+      # == Partner Id
+      #
+      # Using this class requires a CafePress partner id
+      #
+      # == Types
+      #
+      # Methods accept hashes and arrays of hashes, each hash is described below.
+      #
+      # === Customer
+      #
+      # * :company (String)
+      # * :first_name (String)
+      # * :last_name (String)
+      # * :address1 (String)
+      # * :address2 (String)
+      # * :city (String)
+      # * :country (String) - ISO 3166-1 alpha-3 county code
+      # * :email (String)
+      # * :phone (String)
+      # * :state (String)
+      # * :zip (String)
+      #
+      # === Order
+      #
+      # * :id (String|Integer)
+      # * :product_total (String|Float)
+      # * :shipping_total (String|Float)
+      # * :tax_total (String|Float)
+      # * :total (String|Float)
+      # * :shipping_method (String) - Must be one of: FC, PM, TD, SD, ON
+      #
+      # === Order Items
+      #
+      # An array of hashes, each hash may have the following entries:
+      #
+      # * :product_id (String|Integer)
+      # * :name (String)
+      # * :price (String|Float)
+      # * :quantity (String|Integer)
+      #
+      # === Ship Address
+      #
+      # Same as Customer
+      #
+      # === Vendor
+      #
+      # * :name (String)
+      # * :url (String)
+      # * :address1 (String)
+      # * :address2 (String)
+      # * :city (String)
+      # * :country (String) - ISO 3166-1 alpha-3 county code
+      # * :email (String)
+      # * :phone (String)
+      # * :state (String)
+      # * :zip (String)
 
-      # sessiondate valid for shippign req? 
-
-      # if you offer a "package" of products that in your system is one productid (e.g. your product009
-      # is a set of 2 4x6 prints, 1 8x10 and 1 sheet of address labels), it needs to be broken down
-      # into unique EZP productids per orderline.
-      def initialize(options = {})
-        #@partner_id = partner_id
-        #@vendor = vendor
+      def initialize(partner_id, vendor = {})
+        @partner_id = partner_id
+        @vendor = vendor
       end
+
+      # Send an order to CafePress for processing
+      #
+      # === Arguments
+      #
+      # [customer (Hash)]
+      # [order (Hash)]
+      # [order_items (Array)] An +Array+ of +Hash+es
+      # [ship_address (Hash)] Optional. The address to send the order to, defaults to the address
+      #                       given by +customer+.
+      # [vendor (Hash)] Optional. Defaults to the vendor given upon initialization.
+      #
+      # === Returns
+      #
+      # [reference_number (String)] When successful the order's reference number is returned
+      #
+      # === Errors
+      #
+      # [RequestError] A connection cannot be made to CafePress' server
+      # [OrderError] Order submission failed
 
       def place_order(customer, order, order_items, ship_address = nil, vendor = nil)
         req = Client::OrderRequest.new(:partner_id => @partner_id,

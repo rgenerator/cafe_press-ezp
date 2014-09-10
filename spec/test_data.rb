@@ -1,18 +1,33 @@
 module TestData
+  def fixture(name)
+    path = File.join(File.dirname(__FILE__), 'fixtures', name)
+    path << '.xml' unless path.end_with?('.xml')
+    File.read(path)
+  end
+
+  def order_item
+    {
+      :name => 'Mean Mug',
+      :product_id => 1,
+      :quantity => 1,
+      :price => '1.95'
+    }
+  end
+
   def order(attrs = {})
     hash = { 
-      :id              => '1234',
-      :product_total   => 25.99,
-      :shipping_total  => 2.99,
-      :tax_total       => 0.55,
+      :id              => '1',
+      :product_total   => '1.95',
+      :shipping_total  => '5.95',
+      :tax_total       => '0.00',
       :shipping_method => 'FC' 
     }.merge(attrs)
 
-    hash[:total] = hash[:product_total] + hash[:shipping_total] + hash[:tax_total]
+    hash[:total] = sprintf "%.02f", hash[:product_total].to_f + hash[:shipping_total].to_f + hash[:tax_total].to_f
     hash
   end
 
-  def order_items(n = 1)
+  def order_lines(n = 1)
     n.times.each_with_object do |i, c|
       c << { 
         :product_id => sprintf('%04d', i),
@@ -28,6 +43,7 @@ module TestData
   end
 
   def customer(attrs = {})
+    attrs[:email] ||= 'sshaw@rgenerator.com'
     { :first_name => 's', :last_name => 'shaw' }.merge(contact_info(attrs))
   end
 
