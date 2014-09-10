@@ -1,13 +1,18 @@
 require 'cafepress/ezp/client/version'
+require 'cafepress/ezp/client/order_request'
+require 'cafepress/ezp/client/shipping_request'
 
 module CafePress
   module EZP
     class Client
       Error = Class.new(StandardError)
       RequestError = Class.new(Error)
+      OrderError = Class.new(Error)
 
       # If you send one order per ordersession, it is recommended that your ordersessionID be
-      # the same as your internal orderID for clarity in reporting.
+      # the same as your internal orderID for clarity in reporting. Is this //ordersession/sessionid?
+
+      # sessiondate valid for shippign req? 
 
       # if you offer a "package" of products that in your system is one productid (e.g. your product009
       # is a set of 2 4x6 prints, 1 8x10 and 1 sheet of address labels), it needs to be broken down

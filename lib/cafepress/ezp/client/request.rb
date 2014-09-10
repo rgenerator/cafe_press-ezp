@@ -7,8 +7,9 @@ module CafePress
 
       # Subclasses must implement the following methods:
       #
-      #   1. build(doc)
-      #   2. endpoint => returns the endpoint as an instance of +URI+
+      #   1. build_request(builder)
+      #   2. build_response(body)
+      #   3. endpoint => returns the endpoint as an instance of +URI+
       #
       class Request
         @@api_version = 1
@@ -18,8 +19,8 @@ module CafePress
         end
 
         def send
-          body = build(xml)
-          build_response(send_request(body))
+          res = send_request(build)
+          build_response(res)
         end
 
         protected
@@ -58,7 +59,7 @@ module CafePress
             xml.tag! 'ordersession' do
               xml.tag! 'sessionid', order[:id]
 
-              yield xml
+              yield if block_given?
 
               build_order_totals(xml)
             end
@@ -72,7 +73,7 @@ module CafePress
             xml.tag! 'shippingmethod', order[:shipping_method]
             build_order_lines(xml)
 
-            yield xml
+            yield if block_given?
           end
         end
 
