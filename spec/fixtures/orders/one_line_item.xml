@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orders partnerid="1" version="1">
+  <!-- <images>
+  <uri id="3" title="Logo">http://www.ezprints.com/images/logo.jpg</uri>
+  <uri id="5" title="My Photo">http://www.ezprints.com/images/0/0_5.jpg</uri>
+  <uri id="6" title="A  Photo">http://www.ezprints.com/images/0/123.jpg</uri>
+  </images> -->
+  <ordersession>
+    <sessionid>1234</sessionid>
+    <producttotal>1.95</producttotal>
+    <shippingtotal>5.95</shippingtotal>
+    <taxtotal>0.00</taxtotal>
+    <total>7.90</total>
+    <vendor logoimageid = "3">
+      <name>relentlessGENERATOR</name>
+      <address1>400 Lafayette Street</address1>
+      <address2>2R</address2>
+      <city>New York City</city>
+      <state>NY</state>
+      <zip>10003</zip>
+      <countrycode>USA</countrycode>
+      <phone>212 555 1212</phone>
+      <email>dev@rgenerator.com</email>
+      <url>rgenerator.com</url>
+    </vendor>
+    <customer>
+      <firstname>s</firstname>
+      <lastname>shaw</lastname>
+      <address1>400 Lafayette Street</address1>
+      <address2>2R</address2>
+      <city>New York City</city>
+      <state>NY</state>
+      <zip>10003</zip>
+      <countrycode>USA</countrycode>
+      <phone>212 555 1212</phone>
+      <email>sshaw@rgenerator.com</email>
+    </customer>
+    <order>
+      <orderid>1234</orderid>
+      <shippingaddress>
+	<firstname>s</firstname>
+	<lastname>shaw</lastname>
+	<address1>400 Lafayette Street</address1>
+	<address2>2R</address2>
+	<city>New York City</city>
+	<state>NY</state>
+	<zip>10003</zip>
+	<countrycode>USA</countrycode>
+	<phone>212 555 1212</phone>
+	<email>sshaw@rgenerator.com</email>
+      </shippingaddress>
+      <shippingmethod>FC</shippingmethod>
+      <orderline productid="1" imageid="2">
+        <description>Mean Mug</description>
+        <productprice>1.95</productprice>
+        <quantity>1</quantity>
+        <position>FIT</position>
+      </orderline>
+      <producttotal>1.95</producttotal>
+      <shippingprice>5.95</shippingprice>
+      <tax>0.00</tax>
+      <ordertotal>1.95</ordertotal>
+    </order>
+  </ordersession>
+</orders>

@@ -44,9 +44,10 @@ module CafePress
       #
       # An array of hashes, each hash may have the following entries:
       #
-      # * :product_id (String|Integer)
+      # * :product_id (String|Integer) - CafePress product SKU
       # * :name (String)
       # * :price (String|Float)
+      # * :project_id (String) - Instead of :product_id, :name, and :price one can provide a :project_id
       # * :quantity (String|Integer)
       #
       # === Ship Address

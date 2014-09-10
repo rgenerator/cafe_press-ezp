@@ -85,7 +85,7 @@ module CafePress
           # @imageid, affiliatekey
 
           order_items.each do |oi|
-            xml.orderline :productid => oi[:product_id] do
+            xml.orderline :productid => oi[:product_id], :ProjectId => oi[:project_id] do
               xml.quantity oi[:quantity]
               # xml.position oi[:position] # CROP or FIT
               xml.productprice oi[:price]
