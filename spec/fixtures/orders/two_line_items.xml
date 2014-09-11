@@ -56,6 +56,12 @@
         <quantity>1</quantity>
         <position>FIT</position>
       </orderline>
+      <orderline productid="1" imageid="2">
+        <description>Product 1</description>
+        <productprice>1.99</productprice>
+        <quantity>2</quantity>
+        <position>FIT</position>
+      </orderline>
       <producttotal>1.95</producttotal>
       <shippingprice>5.95</shippingprice>
       <tax>0.00</tax>

@@ -5,15 +5,6 @@ module TestData
     File.read(path)
   end
 
-  def order_item
-    {
-      :name => 'Mean Mug',
-      :product_id => 1,
-      :quantity => 1,
-      :price => '1.95'
-    }
-  end
-
   def order(attrs = {})
     hash = { 
       :id              => '1',
@@ -28,12 +19,13 @@ module TestData
   end
 
   def order_lines(n = 1)
-    n.times.each_with_object do |i, c|
+    n.times.each_with_object([]) do |i, c|
       c << { 
-        :product_id => sprintf('%04d', i),
-        :quantity   => rand(5) + 1,
-        :price      => (rand(0.5)*100).round(2),
-        :name       => "Product #{i+1}"
+        :product_id  => i,
+        :quantity    => i + 1,
+        :price       => "#{i}.99",
+        :description => "Product #{i}",
+        :position    => 'FIT'
       }
     end
   end

@@ -1,5 +1,5 @@
-require 'builder'
 require 'net/http'
+require 'cafepress/ezp/builder'
 
 module CafePress
   module EZP
@@ -24,6 +24,7 @@ module CafePress
         end
 
         protected
+
         [:partner_id, :customer, :order, :shipping_address].each do |attr|
           define_method(attr) { @params[attr] ||= {} }
         end
@@ -57,8 +58,6 @@ module CafePress
         def build_order_session(xml)
           xml.ordersession do
             xml.sessionid order[:id]
-            build_order_totals(xml)
-
             yield if block_given?
           end
         end
@@ -86,36 +85,34 @@ module CafePress
 
           order_items.each do |oi|
             xml.orderline :productid => oi[:product_id], :ProjectId => oi[:project_id] do
-              xml.quantity oi[:quantity]
-              # xml.position oi[:position] # CROP or FIT
+              xml.description oi[:description]
               xml.productprice oi[:price]
-              xml.productname oi[:name]
+              xml.quantity oi[:quantity]
+              xml.position oi[:position] # CROP or FIT
               # xml.enhance oi[:enhance]  # enhancement algorithm should be applied to the image before printing
             end
           end
         end
 
         def build_customer(xml)
-          xml.customer do
-            # companyname, firstname, ...
-            build_address(xml, customer)
-          end
+          xml.customer { build_customer_address(xml, customer) }
         end
 
         def build_shipping_address(xml)
-          xml.shippingaddress do
-            xml.companyname shipping_address[:company]
-            xml.firstname shipping_address[:first_name]
-            xml.lastname shipping_address[:last_name]
+          xml.shippingaddress { build_customer_address(xml, shipping_address) }
+        end
 
-            build_address(xml, shipping_address)
-          end
+        def build_customer_address(xml, customer)
+          xml.companyname customer[:company]
+          xml.firstname customer[:first_name]
+          xml.lastname customer[:last_name]
+          build_address(xml, customer)
         end
 
         def build_address(xml, address)
-          [:address1, :address2, :city, :country, :email, :phone, :state, :zip].each do |name|
+          [:address1, :address2, :city, :state, :zip, :country, :phone, :email].each do |name|
             element =  name == :country ? 'countrycode' : name
-            xml.tag! element, customer[name]
+            xml.tag! element, address[name]
           end
         end
       end

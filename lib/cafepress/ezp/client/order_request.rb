@@ -35,9 +35,22 @@ module CafePress
 
         def build_request(xml)
           build_order_session(xml) do
+            # This would be the sum of all orders but we only support one order so they're the same
+            xml.producttotal order[:product_total]
+            # xml.discounttotal
+            xml.shippingtotal order[:shipping_total]
+            xml.taxtotal order[:tax_total]
+            xml.total order[:total]
+
             build_vendor(xml)
             build_customer(xml)
-            build_order(xml)
+            build_order(xml) do
+              xml.producttotal order[:product_total]
+              # xml.discount
+              xml.shippingprice order[:shipping_total]
+              xml.tax order[:tax_total]
+              xml.ordertotal order[:total]
+            end
           end
         end
 

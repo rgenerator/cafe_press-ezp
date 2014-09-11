@@ -2,6 +2,7 @@ require 'cafepress/ezp/client/version'
 require 'cafepress/ezp/client/order_request'
 require 'cafepress/ezp/client/shipping_request'
 
+
 module CafePress
   module EZP
     class Client
