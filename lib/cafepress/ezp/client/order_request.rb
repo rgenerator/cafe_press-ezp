@@ -1,4 +1,3 @@
-require 'rexml/document'
 require 'cafepress/ezp/client/request'
 
 module CafePress
@@ -15,10 +14,7 @@ module CafePress
 
         protected
 
-        def build_response(body)
-          # TODO: Malformed XML is accepted
-          # doc.get_elements(xpath)
-          doc = REXML::Document.new(body)
+        def build_response(doc)
           case doc.root.name
           when 'XmlOrderFailed'
             reason = doc.get_text('/XmlOrderFailed/Reason').to_s.strip

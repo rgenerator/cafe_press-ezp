@@ -8,7 +8,10 @@ module CafePress
 
         protected
 
-        def build_response(body)
+        def build_response(doc)
+          case doc.root.name
+            when 'shippingOptions'
+          end
         end
 
         def build_request(xml)

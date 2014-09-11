@@ -90,7 +90,7 @@ module CafePress
       #
       # === Errors
       #
-      # [RequestError] A connection cannot be made to CafePress' server
+      # [RequestError] An error was encountered during the request/response cycle
       # [OrderError] Order submission failed
 
       def place_order(customer, order, order_items, ship_address = nil, vendor = nil)

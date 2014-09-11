@@ -1,4 +1,6 @@
 require 'net/http'
+require 'rexml/document'
+
 require 'cafepress/ezp/builder'
 
 module CafePress
@@ -8,7 +10,7 @@ module CafePress
       # Subclasses must implement the following methods:
       #
       #   1. build_request(builder)
-      #   2. build_response(body)
+      #   2. build_response(doc)
       #   3. endpoint => returns the endpoint as an instance of +URI+
       #
       class Request
@@ -20,7 +22,14 @@ module CafePress
 
         def send
           res = send_request(build)
-          build_response(res)
+
+          begin
+            doc = REXML::Document.new(res)
+          rescue REXML::ParseException => e
+            raise RequestError, "response contains invalid XML: #{e}"
+          end
+
+          build_response(doc)
         end
 
         protected
