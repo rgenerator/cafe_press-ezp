@@ -4,7 +4,7 @@ module CafePress
   module EZP
     class Client
       class OrderRequest < Request # :nodoc:
-        ENDPOINT = 'order.ezprints.com/PostXmlOrder.axd'
+        ENDPOINT = 'https://order.ezprints.com/PostXmlOrder.axd'
         # ?PartnerNumber=XXX&PartnerReference=yyy
 
         def initialize(params = {})
@@ -14,6 +14,10 @@ module CafePress
         end
 
         protected
+
+        def endpoint
+          ENDPOINT
+        end
 
         def build_response(doc)
           case doc.root.name

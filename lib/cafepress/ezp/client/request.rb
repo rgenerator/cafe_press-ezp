@@ -1,4 +1,5 @@
 require 'net/http'
+require 'uri'
 require 'rexml/document'
 
 require 'cafepress/ezp/builder'
@@ -11,8 +12,8 @@ module CafePress
       #
       #   1. build_request(builder)
       #   2. build_response(doc)
-      #   3. endpoint => returns the endpoint as an instance of +URI+
-      #
+      #   3. endpoint => returns the URL for the request
+
       class Request
         @@api_version = 1
 
@@ -52,15 +53,20 @@ module CafePress
         end
 
         def send_request(body)
-          # TODO: SSL option
-          Net::HTTP.start(endpoint.host, endpoint.port, :use_ssl => false) do
-            http.request_post(endpoint.path, body) do |res|
-              # TODO: does it return non-200s when encoountering non-HTTP problem with request?
-              raise RequestError, "request failed, returned HTTP #{res.code}" if res.code != "200"
-              res.body
-            end
+          # TODO: errors here
+          url = URI(endpoint)
+          #, sprintf('PartnerNumber=%s', URI.escape(partner_id)))
+
+          http = Net::HTTP.new(url.host, url.port)
+          http.set_debug_output($stderr) if $DEBUG
+          http.use_ssl = true
+          http.request_post(url.path, body) do |res|
+            p res.body
+            # TODO: does it return non-200s when encoountering non-HTTP problem with request?
+            raise RequestError, "request failed, returned HTTP #{res.code}" if res.code != "200"
+            res.body
           end
-        rescue SystemCallError, SocketError => e
+        rescue Timeout::Error, SystemCallError, SocketError => e
           raise RequestError, "failed to connect to #{endpoint}: #{e}"
         end
 
