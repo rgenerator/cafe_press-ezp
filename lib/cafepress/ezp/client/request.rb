@@ -97,8 +97,10 @@ module CafePress
               xml.description oi[:description]
               xml.productprice oi[:price]
               xml.quantity oi[:quantity]
-              xml.position oi[:position] # CROP or FIT
+              xml.position oi[:position]
               # xml.enhance oi[:enhance]  # enhancement algorithm should be applied to the image before printing
+              # Array(oi[:images]).each do |image|
+              # xml.orderlineimages
             end
           end
         end

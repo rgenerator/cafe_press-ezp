@@ -9,6 +9,7 @@ module CafePress
 
         def initialize(params = {})
           @vendor = params[:vendor] || {}
+          @images = params[:images] || []
           super
         end
 
@@ -30,6 +31,7 @@ module CafePress
         end
 
         def build_request(xml)
+          build_images(xml)
           build_order_session(xml) do
             # This would be the sum of all orders but we only support one order so they're the same
             xml.producttotal order[:product_total]
@@ -55,6 +57,16 @@ module CafePress
             xml.name @vendor[:name]
             build_address(xml, @vendor)
             xml.url @vendor[:url]
+          end
+        end
+
+        def build_images(xml)
+          return if @images.none?
+
+          xml.images do
+            @images.each do |image|
+              xml.uri(:id => image[:id], :title => image[:title]) { xml.text! image[:url] }
+            end
           end
         end
       end

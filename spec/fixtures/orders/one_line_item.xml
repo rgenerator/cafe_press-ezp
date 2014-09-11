@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <orders partnerid="1" version="1">
-  <!-- <images>
-  <uri id="3" title="Logo">http://www.ezprints.com/images/logo.jpg</uri>
-  <uri id="5" title="My Photo">http://www.ezprints.com/images/0/0_5.jpg</uri>
-  <uri id="6" title="A  Photo">http://www.ezprints.com/images/0/123.jpg</uri>
-  </images> -->
   <ordersession>
     <sessionid>1234</sessionid>
     <producttotal>1.95</producttotal>
