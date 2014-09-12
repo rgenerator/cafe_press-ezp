@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 require 'rexml/document'
 
-require 'cafepress/ezp/builder'
+require 'cafepress/ezp/client/builder'
 
 module CafePress
   module EZP
