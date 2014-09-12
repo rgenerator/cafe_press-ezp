@@ -15,7 +15,8 @@ module CafePress
       #   3. endpoint => returns the URL for the request
 
       class Request
-        @@api_version = 1
+        VERSION = 1
+        HEADERS = { 'Content-Type' => 'application/xml' }
 
         def initialize(params = {})
           @params = params.dup
@@ -47,27 +48,26 @@ module CafePress
           xml = Builder::XmlMarkup.new
           xml.instruct!
           # TODO: may need partner_id in subclasses
-          # TODO: images element
-          xml.orders(:partnerid => @params[:partner_id], :version => @@api_version) { build_request(xml) }
+          xml.orders(:partnerid => @params[:partner_id], :version => VERSION) { build_request(xml) }
           xml.target!
         end
 
         def send_request(body)
-          # TODO: errors here
-          url = URI(endpoint)
-          #, sprintf('PartnerNumber=%s', URI.escape(partner_id)))
+          url  = URI(endpoint)
+          path = sprintf('%s?PartnerNumber=%s', url.path, URI.escape(partner_id.to_s))
 
-          http = Net::HTTP.new(url.host, url.port)
-          http.set_debug_output($stderr) if $DEBUG
-          http.use_ssl = true
-          http.request_post(url.path, body) do |res|
-            p res.body
-            # TODO: does it return non-200s when encoountering non-HTTP problem with request?
-            raise RequestError, "request failed, returned HTTP #{res.code}" if res.code != "200"
-            res.body
+          begin 
+            http = Net::HTTP.new(url.host, url.port)
+            http.set_debug_output($stderr) if $DEBUG
+            http.use_ssl = true
+            res = http.post(path, body, HEADERS)
+          rescue => e 
+            # There are probably 5 exceptions here, so we'll just catch um all
+            raise RequestError, "request failed: #{e}"
           end
-        rescue Timeout::Error, SystemCallError, SocketError => e
-          raise RequestError, "failed to connect to #{endpoint}: #{e}"
+
+          raise RequestError, "request failed, returned HTTP status #{res.code}" if res.code != "200"
+          res.body
         end
 
         def build_order_session(xml)

@@ -5,7 +5,6 @@ module CafePress
     class Client
       class OrderRequest < Request # :nodoc:
         ENDPOINT = 'https://order.ezprints.com/PostXmlOrder.axd'
-        # ?PartnerNumber=XXX&PartnerReference=yyy
 
         def initialize(params = {})
           @vendor = params[:vendor] || {}
@@ -22,11 +21,11 @@ module CafePress
         def build_response(doc)
           case doc.root.name
           when 'XmlOrderFailed'
-            reason = doc.get_text('/XmlOrderFailed/Reason').to_s.strip
-            reason = 'unknown' if reason.empty?
+            reason = doc.root.attributes['Reason'].to_s.strip
+            reason = 'no reason given' if reason.empty?
             raise OrderError, "order request failed: #{reason}"
           when 'XmlOrder'
-            ref = doc.get_text('/XmlOrder/Reference').to_s.strip
+            ref = doc.root.attributes['Reference'].to_s.strip
             raise OrderError, 'order response is missing reference number' if ref.empty?
             ref
           else
