@@ -1,9 +1,9 @@
 require 'rexml/document'
-require 'cafepress/ezp/events'
+require 'cafepress/ezp/event'
 
 module CafePress
   module EZP
-    module Events
+    module Event
 
       class Notification
         attr_accessor :id, :events
@@ -47,9 +47,9 @@ module CafePress
             orders = doc.get_elements('/OrderEventNotification/Order')
             orders.each do |order|
               name = order.children[0].name
-              raise UnknownEventError, "unknown event: #{name}" unless self.class.const_defined?(name)
+              raise UnknownEventError, "unknown event: #{name}" unless Event.const_defined?(name)
 
-              events << self.class.const_get(name).new(id, order)
+              events << Event.const_get(name).new(id, order)
             end
 
             new(id, events)

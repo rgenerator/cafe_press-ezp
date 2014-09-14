@@ -1,6 +1,6 @@
 module CafePress
   module EZP
-    module Events
+    module Event
       # Move Client::Error to EZP::Error?
       # EventError = Class.new(Error)
 
