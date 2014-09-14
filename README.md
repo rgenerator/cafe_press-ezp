@@ -1,10 +1,11 @@
-# CafePress::EZP::Client
+# CafePress::EZP
 
-CafePress EZ Prints API Client
+CafePress EZ Prints API client and event parser
 
 ## Overview
 
     require 'cafepress/ezp/client'
+	require 'cafepress/ezp/event
 	
     include CafePress::EZP
 

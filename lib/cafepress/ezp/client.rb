@@ -1,7 +1,6 @@
-require 'cafepress/ezp/client/version'
+require 'cafepress/ezp'
 require 'cafepress/ezp/client/order_request'
 require 'cafepress/ezp/client/shipping_request'
-
 
 module CafePress
   module EZP
@@ -74,9 +73,8 @@ module CafePress
     # * :zip (String)
 
     class Client
-      Error = Class.new(StandardError)
-      RequestError = Class.new(Error)
-      OrderError = Class.new(Error)
+      RequestError = Class.new(EZPError)
+      OrderError = Class.new(EZPError)
 
       # === Arguments
       #

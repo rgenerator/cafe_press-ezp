@@ -1,8 +1,9 @@
+require 'cafepress/ezp'
+
 module CafePress
   module EZP
     module Event
-      # Move Client::Error to EZP::Error?
-      # EventError = Class.new(Error)
+      EventError = Class.new(EZPError)
 
       Order = Struct.new(:id, :reference_number)
       Item = Struct.new(:id, :sku, :partner_sku, :quantity)
