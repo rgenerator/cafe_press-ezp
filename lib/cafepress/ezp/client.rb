@@ -76,6 +76,34 @@ module CafePress
       RequestError = Class.new(EZPError)
       OrderError = Class.new(EZPError)
 
+      Webhook = Struct.new(:base, :endpoint) do  # :nodoc:
+        def for(name)
+          return base unless endpoint.include?(name)
+          return endpoint[name] if endpoint[name].start_with?('http') || base.nil?
+          # Cheap way to normalize directory separators
+          URI.join(base, endpoint[name]).to_s
+        end
+      end
+
+      # URLs that CafePress will call for event notification. For example:
+      #
+      #    Client.webhooks.base  = 'https://example.com/cafepress'
+      #    Client.webhooks.endpoint[:place_order] = '/orders'
+      #
+      # Calls to +place_order+ will call back to <code>https://example.com/cafepress/orders</code>.
+      # Calls to +shipping_options+ will call back to <code>https://example.com/cafepress</code>.
+      #
+      # You can also use different URLs for each endpoint:
+      #
+      #    Client.webhooks.endpoint[:place_order] = 'http://x.com'
+      #
+      # By default these are not set and event notification will go to a pre-configured URL setup
+      # by CafePress.
+
+      def self.webhooks
+        @@webhoks ||= Webhook.new(nil, {})
+      end
+
       # === Arguments
       #
       # [partner_id (String)]
@@ -118,7 +146,8 @@ module CafePress
                                        :order => order,
                                        :order_items => order_items,
                                        :shipping_address => extras[:shipping_address] || customer,
-                                       :images => extras[:images])
+                                       :images => extras[:images],
+                                       :webhook => webhooks.for(:place_order))
         req.send
       end
 
@@ -127,7 +156,8 @@ module CafePress
                                           :customer => customer,
                                           :order => order,
                                           :order_items => order_items,
-                                          :shipping_address => shipping_address || customer)
+                                          :shipping_address => shipping_address || customer,
+                                          :webhook => webhooks.for(:shipping_options))
         req.send
       end
     end

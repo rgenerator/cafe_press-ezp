@@ -10,11 +10,11 @@ module CafePress
 
       # Subclasses must implement the following methods:
       #
-      #   1. build_request(builder)
-      #   2. build_response(doc)
-      #   3. endpoint => returns the URL for the request
+      # 1. build_request(builder)
+      # 2. build_response(doc)
+      # 3. endpoint => returns the URL for the request as a +String+
 
-      class Request
+      class Request # :nodoc:
         VERSION = 1
         HEADERS = { 'Content-Type' => 'application/xml' }
 
@@ -44,11 +44,15 @@ module CafePress
           @params[:order_items] ||= []
         end
 
+        def webhook
+          @params[:webhook]
+        end
+
         def build
           xml = Builder::XmlMarkup.new
           xml.instruct!
           # TODO: may need partner_id in subclasses
-          xml.orders(:partnerid => @params[:partner_id], :version => VERSION) { build_request(xml) }
+          xml.orders(:partnerid => @params[:partner_id], :version => VERSION, :NotificationUri => webhook) { build_request(xml) }
           xml.target!
         end
 
