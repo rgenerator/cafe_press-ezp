@@ -1,5 +1,4 @@
 require 'rexml/document'
-require 'cafepress/ezp/event'
 
 module CafePress
   module EZP
@@ -26,7 +25,7 @@ module CafePress
 
           invalid_xml(input) unless doc.root
 
-          if doc.root.name == "orderfailed"
+          if doc.root.name == 'orderfailed'
             order_failed_event(doc.root)
           else
             order_state_event(doc.root)
@@ -45,18 +44,18 @@ module CafePress
             events = []
 
             orders = doc.get_elements('/OrderEventNotification/Order')
-            orders.each do |order|
-              name = order.children[0].name
+            orders.each do |order|              
+              name = order.elements.first.name
               raise UnknownEventError, "unknown event: #{name}" unless Event.const_defined?(name)
 
-              events << Event.const_get(name).new(id, order)
+              events << Event.const_get(name).new(order)
             end
 
             new(id, events)
           end
 
           def order_failed_event(doc)
-            new(nil, [ OrderFailed.new(doc) ])
+            new(nil, [ Failed.new(doc) ])
           end
         end
       end

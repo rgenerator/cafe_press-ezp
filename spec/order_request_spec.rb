@@ -15,7 +15,7 @@ RSpec.describe CafePress::EZP::Client::OrderRequest do
                                :customer => customer,
                                :shipping_address => customer)
 
-    expect(req.send).to equal_xml(fixture('orders/one_line_item'))
+    expect(req.send).to equal_xml(fixture('client/orders/one_line_item'))
   end
 
   context 'when given multiple order lines' do
@@ -27,7 +27,7 @@ RSpec.describe CafePress::EZP::Client::OrderRequest do
                                  :customer => customer,
                                  :shipping_address => customer)
 
-      expect(req.send).to equal_xml(fixture('orders/two_line_items'))
+      expect(req.send).to equal_xml(fixture('client/orders/two_line_items'))
     end
   end
 end

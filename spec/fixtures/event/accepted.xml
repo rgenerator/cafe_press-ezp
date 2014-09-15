@@ -1,0 +1,5 @@
+<OrderEventNotification Id="1">
+   <Order Id="2" EZPReferenceNumber="0001-0001-0001">
+      <Accepted DateTime="2008-06-13T13:00:50.0000000" />
+   </Order>
+</OrderEventNotification>

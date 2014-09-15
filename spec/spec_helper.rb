@@ -1,5 +1,6 @@
 require 'test_xml/spec'
 require 'cafepress/ezp/client'
+require 'cafepress/ezp/event'
 
 require 'test_data'
 
