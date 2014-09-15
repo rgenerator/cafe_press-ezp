@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'cafepress/ezp'
 
 Gem::Specification.new do |spec|
-  spec.name          = "cafepress-ezp-client"
+  spec.name          = "cafepress-ezp"
   spec.version       = CafePress::EZP::VERSION
   spec.authors       = ["relentlessGENERATOR"]
   spec.email         = ["dev@rgenerator.com"]

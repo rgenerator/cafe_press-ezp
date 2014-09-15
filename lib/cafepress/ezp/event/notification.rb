@@ -46,7 +46,7 @@ module CafePress
             orders = doc.get_elements('/OrderEventNotification/Order')
             orders.each do |order|              
               name = order.elements.first.name
-              raise UnknownEventError, "unknown event: #{name}" unless Event.const_defined?(name)
+              raise EventError, "unknown event: #{name}" unless Event.const_defined?(name)
 
               events << Event.const_get(name).new(order)
             end
