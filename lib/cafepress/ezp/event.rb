@@ -1,5 +1,6 @@
 require 'cafepress/ezp'
 require 'cafepress/ezp/event/notification'
+require 'cafepress/ezp/event/response'
 
 module CafePress
   module EZP
