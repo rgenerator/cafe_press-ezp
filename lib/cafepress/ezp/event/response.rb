@@ -8,8 +8,8 @@ module CafePress
         SUCCESS = sprintf(XML_TEMPLATE, 'Success').freeze
         FAILURE = sprintf(XML_TEMPLATE, 'Failure').freeze
 
-        def initialize(status)
-          @body = (status.to_i == 0 ? FAILURE : SUCCESS).dup
+        def initialize(success)
+          @body = (success ? SUCCESS : FAILURE).dup
           @headers = HEADERS.merge('Content-Length' => @body.size)
         end
 
