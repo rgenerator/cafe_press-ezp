@@ -1,6 +1,6 @@
-require 'cafepress/ezp'
-require 'cafepress/ezp/client/order_request'
-require 'cafepress/ezp/client/shipping_request'
+require 'cafe_press/ezp'
+require 'cafe_press/ezp/client/order_request'
+require 'cafe_press/ezp/client/shipping_request'
 
 module CafePress
   module EZP
@@ -87,11 +87,11 @@ module CafePress
 
       # URLs that CafePress will call for event notification. For example:
       #
-      #    Client.webhooks.base  = 'https://example.com/cafepress'
+      #    Client.webhooks.base  = 'https://example.com/cafe_press'
       #    Client.webhooks.endpoint[:place_order] = '/orders'
       #
-      # Calls to +place_order+ will call back to <code>https://example.com/cafepress/orders</code>.
-      # Calls to +shipping_options+ will call back to <code>https://example.com/cafepress</code>.
+      # Calls to +place_order+ will call back to <code>https://example.com/cafe_press/orders</code>.
+      # Calls to +shipping_options+ will call back to <code>https://example.com/cafe_press</code>.
       #
       # You can also use different URLs for each endpoint:
       #

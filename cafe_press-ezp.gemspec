@@ -1,10 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'cafepress/ezp'
+require 'cafe_press/ezp'
 
 Gem::Specification.new do |spec|
-  spec.name          = "cafepress-ezp"
+  spec.name          = "cafe_press-ezp"
   spec.version       = CafePress::EZP::VERSION
   spec.authors       = ["relentlessGENERATOR"]
   spec.email         = ["dev@rgenerator.com"]

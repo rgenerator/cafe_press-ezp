@@ -1,4 +1,4 @@
-require 'cafepress/ezp/client/request'
+require 'cafe_press/ezp/client/request'
 
 module CafePress
   module EZP

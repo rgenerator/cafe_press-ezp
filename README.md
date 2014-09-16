@@ -4,12 +4,12 @@ CafePress EZ Prints API client and event parser
 
 ## Overview
 
-    require 'cafepress/ezp/client'
-    require 'cafepress/ezp/event'
+    require 'cafe_press/ezp/client'
+    require 'cafe_press/ezp/event'
 
     include CafePress::EZP
 
-    Client.webhooks.base = 'http://example.com/fulfiller/cafepress'
+    Client.webhooks.base = 'http://example.com/fulfiller/cafe_press'
 
     partner_id = 1234
     client = Client.new(partner_id, :name => 'rgnrtr', :address1 => '400 Lafayette St 2R', :city => 'NYC', ...)
