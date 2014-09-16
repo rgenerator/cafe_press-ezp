@@ -147,7 +147,7 @@ module CafePress
                                        :order_items => order_items,
                                        :shipping_address => extras[:shipping_address] || customer,
                                        :images => extras[:images],
-                                       :webhook => webhooks.for(:place_order))
+                                       :webhook => self.class.webhooks.for(:place_order))
         req.send
       end
 
@@ -157,7 +157,7 @@ module CafePress
                                           :order => order,
                                           :order_items => order_items,
                                           :shipping_address => shipping_address || customer,
-                                          :webhook => webhooks.for(:shipping_options))
+                                          :webhook => self.class.webhooks.for(:shipping_options))
         req.send
       end
     end
