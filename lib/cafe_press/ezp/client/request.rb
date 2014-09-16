@@ -49,7 +49,7 @@ module CafePress
         end
 
         def build
-          xml = Builder::XmlMarkup.new
+          xml = Builder.new
           xml.instruct!
           # TODO: may need partner_id in subclasses
           xml.orders(:partnerid => @params[:partner_id], :version => VERSION, :NotificationUri => webhook) { build_request(xml) }
