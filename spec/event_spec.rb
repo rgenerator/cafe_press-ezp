@@ -53,6 +53,7 @@ RSpec.describe Notification do
 
       expect(event.items.size).to eq 1
       expect(event.items.first.id).to eq '99'
+      expect(event.items.first.project_id).to eq '123-456-789'
     end
 
     describe "cancel events" do

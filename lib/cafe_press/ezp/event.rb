@@ -8,7 +8,7 @@ module CafePress
       EventError = Class.new(EZPError)
 
       Order = Struct.new(:id, :reference_number)
-      Item = Struct.new(:id, :sku, :partner_sku, :quantity)
+      Item = Struct.new(:id, :sku, :partner_sku, :quantity, :project_id)
 
       # TODO: add date_time as a attr?
       class SuccessEvent
@@ -36,7 +36,7 @@ module CafePress
         end
 
         def item(element)
-          Item.new(*attributes(element).values_at(:id, :sku, :partner_sku, :quantity))
+          Item.new(*attributes(element).values_at(:id, :sku, :partner_sku, :quantity, :project_id))
         end
 
         def attributes(element)
