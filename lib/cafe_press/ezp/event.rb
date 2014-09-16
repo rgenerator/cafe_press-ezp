@@ -24,8 +24,15 @@ module CafePress
 
         protected
 
+        # This is okay for all events except Moderation*, which we don't support.
+        # If we ever do support then this will have to be placed into another subclass -or something...
         def build_event(elements)
-          # nothing
+          return if elements.empty?
+
+          data.merge!(attributes(elements.first))
+          items.replace(
+            elements.first.elements.map { |i| item(i) }
+          )
         end
 
         def item(element)
@@ -46,19 +53,10 @@ module CafePress
 
       Accepted = Class.new(SuccessEvent)
       AssetsCollected = Class.new(SuccessEvent)
+      Canceled = Class.new(SuccessEvent)
       Complete = Class.new(SuccessEvent)
       InProduction = Class.new(SuccessEvent)
-
-      class Shipment < SuccessEvent
-        protected
-
-        def build_event(elements)
-          data.merge!(attributes(elements.first))
-          items.replace(
-            elements.first.elements.map { |i| item(i) }
-          )
-        end
-      end
+      Shipment = Class.new(SuccessEvent)
 
       class Failed
         attr_accessor :order, :data, :items

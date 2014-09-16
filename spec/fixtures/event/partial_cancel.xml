@@ -1,0 +1,8 @@
+<OrderEventNotification Id="1">
+   <Order Id="2" EZPReferenceNumber="0001-0001-0001">
+      <Canceled DateTime="2008-06-12T00:00:00.0000000">
+	<Item Id="1" Sku="0001" PartnerSku="X1" Quantity="1" />
+	<Item Id="2" Sku="0002" PartnerSku="X2" Quantity="2" />
+      </Canceled>
+   </Order>
+</OrderEventNotification>
